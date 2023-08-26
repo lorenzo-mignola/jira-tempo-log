@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/lorenzo-mignola/jira-tempo-log/models"
+	projectService "github.com/lorenzo-mignola/jira-tempo-log/service/project"
 	"github.com/manifoldco/promptui"
 )
 
@@ -11,7 +13,14 @@ func AddProject() {
 	project := getProject()
 	description := getDescription()
 
-	fmt.Printf("Project: %s\nDescription:%s", project, description)
+	newProject := models.Project{
+		Name:        project,
+		Description: description,
+	}
+
+	projectCreated := projectService.Insert(&newProject)
+
+	fmt.Printf("ID:%d\nProject: %s\nDescription:%s", projectCreated.ID, projectCreated.Name, projectCreated.Description)
 }
 
 func getProject() string {

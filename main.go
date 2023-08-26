@@ -5,10 +5,13 @@ import (
 	"os"
 
 	"github.com/lorenzo-mignola/jira-tempo-log/cmd"
+	"github.com/lorenzo-mignola/jira-tempo-log/db"
 	"github.com/spf13/cobra"
 )
 
 func main() {
+	db.Migrate()
+
 	app := &cobra.Command{
 		Use:   "jtl",
 		Short: "Jira Tempo Log",
