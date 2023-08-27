@@ -17,4 +17,5 @@ func GetDb() *gorm.DB {
 func Migrate() {
 	db := GetDb()
 	db.AutoMigrate(&models.Project{})
+	db.AutoMigrate(&models.StoryLog{})
 }

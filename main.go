@@ -19,6 +19,7 @@ func main() {
 	}
 
 	app.AddCommand(cmd.ProjectCommand())
+	app.AddCommand(cmd.LogCommand())
 
 	err := app.Execute()
 	if err != nil {

@@ -5,6 +5,7 @@ go 1.21.0
 require (
 	github.com/manifoldco/promptui v0.9.0
 	github.com/spf13/cobra v1.7.0
+	github.com/ttacon/chalk v0.0.0-20160626202418-22c06c80ed31
 	gorm.io/driver/sqlite v1.5.3
 	gorm.io/gorm v1.25.4
 )

@@ -10,11 +10,11 @@ import (
 )
 
 func AddProject() {
-	project := getProject()
+	name := getName()
 	description := getDescription()
 
 	newProject := models.Project{
-		Name:        project,
+		Name:        name,
 		Description: description,
 	}
 
@@ -23,7 +23,7 @@ func AddProject() {
 	fmt.Printf("ID:%d\nProject: %s\nDescription:%s", projectCreated.ID, projectCreated.Name, projectCreated.Description)
 }
 
-func getProject() string {
+func getName() string {
 	prompt := promptui.Prompt{
 		Label: "Project",
 		Templates: &promptui.PromptTemplates{
