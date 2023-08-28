@@ -9,7 +9,6 @@ import (
 )
 
 func LogCommand() *cobra.Command {
-
 	logCommand := &cobra.Command{
 		Use:   "log",
 		Short: "Log on a project",

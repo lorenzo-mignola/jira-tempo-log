@@ -1,7 +1,6 @@
 package forms
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"strconv"
@@ -22,13 +21,16 @@ func AddLog(defaultDate time.Time) {
 
 	storyNumber := storyNumber()
 	fmt.Printf("Story: %s-%d", project.Name, storyNumber)
-	description := description()
+
 	date := date(defaultDate)
+	duration := duration()
+	description := description()
 
 	storyLog := models.StoryLog{
 		StoryNumber: storyNumber,
 		Description: description,
 		Date:        date,
+		Duration:    duration,
 		ProjectID:   project.ID,
 	}
 
@@ -57,12 +59,10 @@ func selectProject() (*models.Project, error) {
 
 func storyNumber() int {
 	prompt := promptui.Prompt{
-		Label: "Story number",
+		Label: "#️⃣ Story number",
 		Validate: func(input string) error {
-			if len(input) == 0 {
-				return errors.New("story number can't be empty")
-			}
-			return nil
+			_, err := strconv.Atoi(input)
+			return err
 		},
 	}
 
@@ -80,6 +80,33 @@ func storyNumber() int {
 
 	return int(storyNumber)
 }
+
+func duration() float64 {
+	prompt := promptui.Prompt{
+		Label: "🕒 Duration",
+		Validate: func(input string) error {
+			_, err := time.ParseDuration(input)
+
+			return err
+		},
+	}
+
+	durationStr, err := prompt.Run()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	duration, err := time.ParseDuration(durationStr)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return duration.Seconds()
+}
+
+const format = "02.01.2006"
 
 func description() string {
 	prompt := promptui.Prompt{
@@ -100,9 +127,30 @@ func description() string {
 
 // TODO ask the user to insert the date
 func date(defaultDate time.Time) time.Time {
-	if defaultDate.IsZero() {
+	if !defaultDate.IsZero() {
 		return defaultDate
 	}
 
-	return time.Now()
+	prompt := promptui.Prompt{
+		Label: "📅 Date",
+		Validate: func(input string) error {
+			_, err := time.Parse(format, input)
+
+			return err
+		},
+	}
+
+	dateStr, err := prompt.Run()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	date, err := time.Parse(format, dateStr)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return date
 }

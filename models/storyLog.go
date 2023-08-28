@@ -13,6 +13,7 @@ type StoryLog struct {
 	StoryNumber int `gorm:"not null"`
 	Date        time.Time
 	Description string
+	Duration    float64 `gorm:"not null"`
 	ProjectID   uint
 	Project     Project
 }
@@ -21,13 +22,13 @@ func (storyLog StoryLog) getFullStoryName() string {
 	return fmt.Sprintf("%s-%d", storyLog.Project.Name, storyLog.StoryNumber)
 }
 
-func (storyLog StoryLog) getStringDate() string {
-	return fmt.Sprintf("%d.%d.%d", storyLog.Date.Day(), storyLog.Date.Month(), storyLog.Date.Year())
+func (storyLog StoryLog) getDateString() string {
+	return storyLog.Date.Format("02.01.2006")
 }
 
 func (storyLog StoryLog) Print() {
 	storyName := chalk.Green.Color(storyLog.getFullStoryName())
-	date := chalk.Blue.Color(storyLog.getStringDate())
+	date := chalk.Blue.Color(storyLog.getDateString())
 
-	fmt.Printf("🔨 Story: %s - Date: %s - Description: %s 🔨\n", storyName, date, storyLog.Description)
+	fmt.Printf("🔨 Story: %s - Date: %s - Duration: %f Description: %s 🔨\n", storyName, date, storyLog.Duration, storyLog.Description)
 }
