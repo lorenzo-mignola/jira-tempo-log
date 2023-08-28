@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/lorenzo-mignola/jira-tempo-log/forms"
+	storyLogService "github.com/lorenzo-mignola/jira-tempo-log/service/storyLog"
 	"github.com/spf13/cobra"
 )
 
@@ -15,9 +16,23 @@ func LogCommand() *cobra.Command {
 		Run:   logStory,
 	}
 
+	listCommand := &cobra.Command{
+		Use:   "list",
+		Short: "List all logs",
+		Run:   printAllLogs,
+	}
+
 	logCommand.Flags().BoolP("now", "n", false, "set today as date")
+	logCommand.AddCommand(listCommand)
 
 	return logCommand
+}
+
+func printAllLogs(cmd *cobra.Command, args []string) {
+	logs := storyLogService.GetAll()
+	for i := 0; i < len(logs); i++ {
+		logs[i].Print()
+	}
 }
 
 func logStory(cmd *cobra.Command, args []string) {

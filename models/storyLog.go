@@ -29,6 +29,8 @@ func (storyLog StoryLog) getDateString() string {
 func (storyLog StoryLog) Print() {
 	storyName := chalk.Green.Color(storyLog.getFullStoryName())
 	date := chalk.Blue.Color(storyLog.getDateString())
+	durationStr := fmt.Sprintf("%.0fs", storyLog.Duration)
+	duration := chalk.Red.Color(durationStr)
 
-	fmt.Printf("🔨 Story: %s - Date: %s - Duration: %f Description: %s 🔨\n", storyName, date, storyLog.Duration, storyLog.Description)
+	fmt.Printf("🔨 Story: %s - Date: %s - Duration: %.0fs Description: %s 🔨\n", storyName, date, duration, storyLog.Description)
 }

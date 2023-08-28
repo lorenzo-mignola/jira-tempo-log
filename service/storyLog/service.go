@@ -12,3 +12,11 @@ func Insert(storyLog *models.StoryLog) models.StoryLog {
 
 	return *storyLog
 }
+
+func GetAll() []models.StoryLog {
+	var logs []models.StoryLog
+
+	db.GetDb().Find(&logs)
+
+	return logs
+}
