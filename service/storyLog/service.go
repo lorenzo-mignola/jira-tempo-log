@@ -16,7 +16,7 @@ func Insert(storyLog *models.StoryLog) models.StoryLog {
 func GetAll() []models.StoryLog {
 	var logs []models.StoryLog
 
-	db.GetDb().Find(&logs)
+	db.GetDb().Joins("Project").Find(&logs)
 
 	return logs
 }
