@@ -32,5 +32,5 @@ func (storyLog StoryLog) Print() {
 	durationStr := fmt.Sprintf("%.0fs", storyLog.Duration)
 	duration := chalk.Red.Color(durationStr)
 
-	fmt.Printf("🔨 Story: %s - Date: %s - Duration: %.0fs Description: %s 🔨\n", storyName, date, duration, storyLog.Description)
+	fmt.Printf("🔨 Story: %s - Date: %s - Duration: %s Description: %s 🔨\n", storyName, date, duration, storyLog.Description)
 }
